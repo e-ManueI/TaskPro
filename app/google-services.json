@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "921310610690",
+    "project_id": "taskpro-73967",
+    "storage_bucket": "taskpro-73967.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921310610690:android:79a87513c89a04d5f2ee1b",
+        "android_client_info": {
+          "package_name": "com.example.taskpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921310610690-9lnvkoerqm5rollhce405apdqc39vt0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH5kabG1Dp2otykvDkV-lm2uazLxgkZw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921310610690-9lnvkoerqm5rollhce405apdqc39vt0b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

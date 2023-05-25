@@ -54,7 +54,7 @@
                 />
 
             <EditText
-                android:id="@+id/editTextText"
+                android:id="@+id/editTextTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="32dp"
@@ -65,7 +65,7 @@
                 android:drawablePadding="16dp"
                 android:ems="10"
                 android:hint="Email"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:padding="8dp"
                 android:textColor="@color/purple"
                 android:textColorHint="@color/purple" />
