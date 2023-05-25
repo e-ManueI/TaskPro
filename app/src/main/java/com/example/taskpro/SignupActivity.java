@@ -3,7 +3,10 @@ package com.example.taskpro;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -62,6 +65,16 @@ public class SignupActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String password2 = editTextPassword2.getText().toString().trim();
 
+        if (!isNetworkAvailable()) {
+            // No network connection, disable input fields
+            editTextName.setEnabled(false);
+            editTextEmail.setEnabled(false);
+            editTextPassword.setEnabled(false);
+            editTextPassword2.setEnabled(false);
+            Toast.makeText(SignupActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
 //        Validate the input fields
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || password2.isEmpty()) {
             Toast.makeText(SignupActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
@@ -98,5 +111,11 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

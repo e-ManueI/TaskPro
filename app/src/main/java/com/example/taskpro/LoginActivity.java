@@ -65,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
             // No network connection, disable input fields
             editTextEmail.setEnabled(false);
             editTextPassword.setEnabled(false);
-            imageViewLogin.setEnabled(false);
-            registerTextView.setEnabled(false);
             Toast.makeText(LoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_LONG).show();
             return;
         }
