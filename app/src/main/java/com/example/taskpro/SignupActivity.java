@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText editTextName, editTextEmail, editTextPassword, editTextPassword2;
@@ -78,8 +79,17 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            // Get the user ID of the newly created user
+                            String userId = firebaseAuth.getCurrentUser().getUid();
+
+                            // Save the name to Firebase Realtime Database under the user's ID
+                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+                            usersRef.child(userId).child("name").setValue(name);
+
                             // sign-up process
-                            Toast.makeText(SignupActivity.this, "Sign-up succesfull", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "Sign-up successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+
                             // I can add logic here, such as navigating to the home screen.
                         }else {
                             // Sign-up failed

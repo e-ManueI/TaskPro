@@ -3,7 +3,10 @@ package com.example.taskpro;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -58,6 +61,16 @@ public class LoginActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        if (!isNetworkAvailable()) {
+            // No network connection, disable input fields
+            editTextEmail.setEnabled(false);
+            editTextPassword.setEnabled(false);
+            imageViewLogin.setEnabled(false);
+            registerTextView.setEnabled(false);
+            Toast.makeText(LoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (email.isEmpty()) {
             editTextEmail.setError("Email is Required");
             editTextEmail.requestFocus();
@@ -76,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                        if (task.isSuccessful()) {
                            // login succesful
+                           Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                            finish();
                        }else{
@@ -84,5 +98,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }
