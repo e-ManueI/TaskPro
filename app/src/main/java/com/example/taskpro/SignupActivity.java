@@ -3,8 +3,10 @@ package com.example.taskpro;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -23,9 +25,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText editTextName, editTextEmail, editTextPassword, editTextPassword2;
-    private FirebaseAuth firebaseAuth;
     private ImageView imageViewSignUp;
     private TextView loginTextView;
+    private FirebaseAuth firebaseAuth;
+    private boolean isNetworkAvailable = true;
+    private SignupActivity.NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +62,26 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(loginIntent);
             }
         });
+
+        // Register network change receiver
+        networkChangeReceiver = new SignupActivity.NetworkChangeReceiver();
+        registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister network change receiver
+        unregisterReceiver(networkChangeReceiver);
+    }
+
     private void signUp() {
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String password2 = editTextPassword2.getText().toString().trim();
 
-        if (!isNetworkAvailable()) {
+        if (!isNetworkAvailable) {
             // No network connection, disable input fields
             editTextName.setEnabled(false);
             editTextEmail.setEnabled(false);
@@ -111,6 +127,26 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private class NetworkChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (isNetworkAvailable()) {
+                isNetworkAvailable = true;
+                editTextName.setEnabled(true);
+                editTextEmail.setEnabled(true);
+                editTextPassword.setEnabled(true);
+                editTextPassword2.setEnabled(true);
+                Toast.makeText(SignupActivity.this, "Network connection restored", Toast.LENGTH_SHORT).show();
+            } else {
+                isNetworkAvailable = false;
+                editTextName.setEnabled(false);
+                editTextEmail.setEnabled(false);
+                editTextPassword.setEnabled(false);
+                editTextPassword2.setEnabled(false);
+                Toast.makeText(SignupActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private boolean isNetworkAvailable() {

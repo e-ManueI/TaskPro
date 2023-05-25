@@ -3,8 +3,10 @@ package com.example.taskpro;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,11 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskpro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.ktx.Firebase;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
@@ -27,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView registerTextView;
 
     private FirebaseAuth mAuth;
+    private boolean isNetworkAvailable = true;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        editTextEmail =  findViewById(R.id.editTextTextEmail);
+        editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         imageViewLogin = findViewById(R.id.imageView5);
         registerTextView = findViewById(R.id.textView5);
@@ -50,19 +54,28 @@ public class LoginActivity extends AppCompatActivity {
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                handle register text click
                 Intent signUpIntent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(signUpIntent);
             }
         });
+
+        // Register network change receiver
+        networkChangeReceiver = new NetworkChangeReceiver();
+        registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister network change receiver
+        unregisterReceiver(networkChangeReceiver);
     }
 
     private void login() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if (!isNetworkAvailable()) {
-            // No network connection, disable input fields
+        if (!isNetworkAvailable) {
             editTextEmail.setEnabled(false);
             editTextPassword.setEnabled(false);
             Toast.makeText(LoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_LONG).show();
@@ -85,17 +98,32 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                       if (task.isSuccessful()) {
-                           // login succesful
-                           Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                           startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                           finish();
-                       }else{
-                           Toast.makeText(LoginActivity.this, "Login Failed. Please check your credentials", Toast.LENGTH_SHORT).show();
-                       }
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login Failed. Please check your credentials", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
+    }
 
+    private class NetworkChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (isNetworkAvailable()) {
+                isNetworkAvailable = true;
+                editTextEmail.setEnabled(true);
+                editTextPassword.setEnabled(true);
+                Toast.makeText(LoginActivity.this, "Network connection restored", Toast.LENGTH_SHORT).show();
+            } else {
+                isNetworkAvailable = false;
+                editTextEmail.setEnabled(false);
+                editTextPassword.setEnabled(false);
+                Toast.makeText(LoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private boolean isNetworkAvailable() {
