@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.TaskPro" parent="Base.Theme.TaskPro" />
+    <style name="Theme.TaskPro.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.TaskPro.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.TaskPro.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

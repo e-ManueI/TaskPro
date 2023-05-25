@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 isNetworkAvailable = true;
                 editTextEmail.setEnabled(true);
                 editTextPassword.setEnabled(true);
-                Toast.makeText(LoginActivity.this, "Network connection restored", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Network connection available", Toast.LENGTH_SHORT).show();
             } else {
                 isNetworkAvailable = false;
                 editTextEmail.setEnabled(false);

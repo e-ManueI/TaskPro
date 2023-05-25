@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                handle login button click
+                //  handle login button click
                 Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
             }
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                handle sign up button click
+                // handle sign up button click
                 Intent signUpIntent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(signUpIntent);
             }

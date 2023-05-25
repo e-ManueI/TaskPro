@@ -137,7 +137,7 @@ public class SignupActivity extends AppCompatActivity {
                 editTextEmail.setEnabled(true);
                 editTextPassword.setEnabled(true);
                 editTextPassword2.setEnabled(true);
-                Toast.makeText(SignupActivity.this, "Network connection restored", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, "Network connection available", Toast.LENGTH_SHORT).show();
             } else {
                 isNetworkAvailable = false;
                 editTextName.setEnabled(false);
