@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TaskPro"
-        android:textColor="@color/purple"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="18sp"/>
 
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Emmanuel"
-        android:textColor="@color/purple"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:layout_marginTop="16dp"/>
 
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="manueltylan@gmail.com"
-        android:textColor="@color/purple"
+        android:textColor="@color/white"
         android:textSize="13sp"
         android:layout_marginBottom="16dp"/>
 
