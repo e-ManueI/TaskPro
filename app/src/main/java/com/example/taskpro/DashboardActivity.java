@@ -7,11 +7,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -59,9 +61,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_privacy) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PrivacyFragment()).commit();
         } else if (itemId == R.id.nav_logout) {
-            Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
-        }
+            // Handle the logout activity
+            // Perform logout
+            FirebaseAuth.getInstance().signOut();
 
+            // Redirect to login or splash screen
+            Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
+            Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
+            finish(); // Optional: finish the current activity to prevent going back to it
+        }
+        drawerLayout.closeDrawer(GravityCompat.START); // Minimize the side menu
         return true;
     }
 
