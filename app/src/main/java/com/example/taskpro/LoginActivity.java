@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.taskpro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,8 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private ImageView imageViewLogin;
-    private TextView registerTextView;
 
     private FirebaseAuth mAuth;
     private boolean isNetworkAvailable = true;
@@ -41,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
-        imageViewLogin = findViewById(R.id.imageView5);
-        registerTextView = findViewById(R.id.textView5);
+        ImageView imageViewLogin = findViewById(R.id.imageView5);
+        TextView registerTextView = findViewById(R.id.textView5);
 
         imageViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
