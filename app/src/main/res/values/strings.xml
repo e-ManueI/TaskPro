@@ -14,6 +14,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <string name="help_search">Need Some Help?</string>
+    <string name="help_search_placeholder">Search Something</string>
+    <string name="faq">Frequently Asked Questions</string>
+    <string name="help_nav">Help Header</string>
 
 
 </resources>
