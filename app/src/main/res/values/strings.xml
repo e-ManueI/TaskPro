@@ -14,10 +14,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <string name="help_header">Help Header</string>
     <string name="help_search">Need Some Help?</string>
     <string name="help_search_placeholder">Search Something</string>
     <string name="faq">Frequently Asked Questions</string>
-    <string name="help_nav">Help Header</string>
-
+    <string name="faq1_header">How can I search for a specific task?</string>
+    <string name="faq1_content">Use the app\'s search feature to find specific tasks by entering relevant keywords. The app will filter and display matching tasks.</string>
+    <string name="faq2_header">How do I create a new task?</string>
+    <string name="faq2_content">Click "New Task" or the "+" icon, fill in task details, and click "Save" to create a new task.</string>
+    <string name="faq3_header">How do I share this app with friends?</string>
+    <string name="faq3_content">Simply go to navigation menu and choose the share option item.</string>
+    <string name="ppolicy_header">Privacy Policy</string>
 
 </resources>
