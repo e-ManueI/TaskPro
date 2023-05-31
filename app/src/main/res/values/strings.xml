@@ -25,5 +25,20 @@
     <string name="faq3_header">How do I share this app with friends?</string>
     <string name="faq3_content">Simply go to navigation menu and choose the share option item.</string>
     <string name="ppolicy_header">Privacy Policy</string>
+    <string name="ppolicy_intro">We want you to know exactly how TaskPro services work and why we need your details. Reviewing our policy will help you to continue using the app with peace of mind.</string>
+
+    <string name="view_more">View more about specific privacy policy</string>
+    <string name="ppolicy1">What information do we collect about you?</string>
+    <string name="ppolicy2">How do we use your information?</string>
+    <string name="ppolicy3">To whom do we disclose your information?</string>
+    <string name="ppolicy4">What do we do to keep your information secure?</string>
+    <string name="ppolicy5">Cookies, beacons and Geo-tracking.</string>
+
+
+
+
+
+
+
 
 </resources>

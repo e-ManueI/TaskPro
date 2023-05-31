@@ -94,7 +94,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             FirebaseAuth.getInstance().signOut();
 
             // Redirect to login or splash screen
-            Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Logout Succesfully!", Toast.LENGTH_SHORT).show();
             Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
             startActivity(loginIntent);
             finish(); // Optional: finish the current activity to prevent going back to it
