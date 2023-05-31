@@ -77,7 +77,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (itemId == R.id.nav_settings) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
         } else if (itemId == R.id.nav_share) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
+            // Show sharing options
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "TaskPro App");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out TaskPro App: https://play.google.com/store/apps?hl=en&gl=US");
+            startActivity(Intent.createChooser(shareIntent, "Share App"));
         } else if (itemId == R.id.nav_help) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpFragment()).commit();
         } else if (itemId == R.id.nav_account) {
@@ -94,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             FirebaseAuth.getInstance().signOut();
 
             // Redirect to login or splash screen
-            Toast.makeText(this, "Logout Succesfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Logout Successfully!", Toast.LENGTH_SHORT).show();
             Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
             startActivity(loginIntent);
             finish(); // Optional: finish the current activity to prevent going back to it
