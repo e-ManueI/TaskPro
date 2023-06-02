@@ -1,6 +1,9 @@
 package com.example.taskpro;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -105,30 +108,42 @@ public class AddTaskFragment extends Fragment {
         // Create a Task object
         Task task = new Task(title, content);
 
-        // Save the task to the user's tasks node
-        userTasksRef.child(taskId).setValue(task)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Task saved successfully
-                        Toast.makeText(getActivity(), "Task saved successfully", Toast.LENGTH_SHORT).show();
-                        navigateToHomeFragment();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Error occurred while saving the task
-                        Toast.makeText(getActivity(), "Failed to save task: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        // Check for internet connection availability
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if (isConnected) {
+            // Internet connection is available, save the task to Firebase
+            userTasksRef.child(taskId).setValue(task)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // Task saved successfully
+                            Toast.makeText(getActivity(), "Task saved successfully", Toast.LENGTH_SHORT).show();
+                            navigateToHomeFragment();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Error occurred while saving the task
+                            Toast.makeText(getActivity(), "Failed to save task: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            // No internet connection, save the task locally and redirect to the homepage
+            userTasksRef.child(taskId).setValue(task);
+            Toast.makeText(getActivity(), "Task saved locally. No internet connection.", Toast.LENGTH_SHORT).show();
+            navigateToHomeFragment();
+        }
     }
+
 
 
     private void navigateToHomeFragment() {
         // Implement the navigation logic to go back to HomeFragment
         // Example: use a FragmentManager to replace the current fragment with HomeFragment
-
         // Create an instance of the HomeFragment
         HomeFragment homeFragment = new HomeFragment();
 
