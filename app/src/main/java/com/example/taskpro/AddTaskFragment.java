@@ -1,5 +1,6 @@
 package com.example.taskpro;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -80,23 +83,35 @@ public class AddTaskFragment extends Fragment {
     }
 
     private void saveTaskToFirebase(String title, String content) {
-        // Initialize Firebase database reference
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("tasks");
+        // Get the current user ID (assuming you have implemented Firebase Authentication)
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            // User is not authenticated, handle accordingly
+            Toast.makeText(getActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
+            // Redirect to login page
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            return;
+        }
+        String userId = currentUser.getUid();
 
-        // Create a new task object
-        Task task = new Task(title, content);
+        // Create a reference to the user's tasks node
+        DatabaseReference userTasksRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(userId)
+                .child("tasks");
 
         // Generate a unique key for the task
-        String taskId = databaseRef.push().getKey();
+        String taskId = userTasksRef.push().getKey();
 
-        // Save the task to Firebase
-        databaseRef.child(taskId).setValue(task)
+        // Create a Task object
+        Task task = new Task(title, content);
+
+        // Save the task to the user's tasks node
+        userTasksRef.child(taskId).setValue(task)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Task saved successfully, navigate back to HomeFragment
+                        // Task saved successfully
                         Toast.makeText(getActivity(), "Task saved successfully", Toast.LENGTH_SHORT).show();
-                        // Call a method to navigate back to HomeFragment
                         navigateToHomeFragment();
                     }
                 })
@@ -108,6 +123,7 @@ public class AddTaskFragment extends Fragment {
                     }
                 });
     }
+
 
     private void navigateToHomeFragment() {
         // Implement the navigation logic to go back to HomeFragment
