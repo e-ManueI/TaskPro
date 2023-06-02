@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -24,18 +25,60 @@
         android:layout_marginTop="2dp"
         android:background="@color/purple_500" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginVertical="16dp">
+
+        <ImageView
+            android:id="@+id/calendarImageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/task_date"
+            app:tint="@color/purple"
+            android:contentDescription="Select Date"/>
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="20sp"
+            android:layout_marginEnd="56dp"/>
+
+
+        <ImageView
+            android:id="@+id/clockImageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/task_time"
+            android:contentDescription="Select Time"
+            app:tint="@color/purple"
+            android:layout_marginHorizontal="16dp"/>
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Time"
+            android:textSize="20sp"
+            android:gravity="right"/>
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/contentInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Content"
-            android:gravity="top|start">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/contentEditText"
@@ -43,11 +86,13 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:hint="Content"
-                android:minLines="25"
+                android:gravity="start"
+                android:minLines="8"
                 android:maxLines="100"
                 android:scrollbars="vertical" />
         </com.google.android.material.textfield.TextInputLayout>
     </ScrollView>
+
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"

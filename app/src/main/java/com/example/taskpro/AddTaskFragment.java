@@ -1,5 +1,7 @@
 package com.example.taskpro;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -16,6 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,28 +32,39 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+import java.util.Locale;
+
+import kotlin.text.UStringsKt;
+
 public class AddTaskFragment extends Fragment {
     // Declare the necessary views and Firebase variables
-
     public class Task {
         private String title;
         private String content;
+        private String date;
+        private String time;
 
         public Task() {
             // Default constructor required for Firebase
         }
-
         public Task(String title, String content) {
             this.title = title;
             this.content = content;
+            this.date = date;
+            this.time = time;
         }
-
         public String getTitle() {
             return title;
         }
-
         public String getContent() {
             return content;
+        }
+        public String getDate() {
+            return date;
+        }
+        public String getTime() {
+            return time;
         }
     }
 
@@ -57,14 +74,79 @@ public class AddTaskFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_add_task, container, false);
     }
 
+    // Declare variables to store selected date and time
+    private int year, month, day, hour, minute;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Find the views
         TextInputEditText titleEditText = view.findViewById(R.id.titleEditText);
+        TextView dateTextView = view.findViewById(R.id.dateTextView);
+        ImageView calendarImageView = view.findViewById(R.id.calendarImageView);
+        TextView timeTextView = view.findViewById(R.id.timeTextView);
+        ImageView clockImageView = view.findViewById(R.id.clockImageView);
         TextInputEditText contentEditText = view.findViewById(R.id.contentEditText);
         Button saveButton = view.findViewById(R.id.saveButton);
+
+        // Set click listener for the calendar image view
+        calendarImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the current date
+                final Calendar calendar = Calendar.getInstance();
+                int currentYear = calendar.get(Calendar.YEAR);
+                int currentMonth = calendar.get(Calendar.MONTH);
+                int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                // Create a DatePickerDialog to allow the user to select a date
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Store the selected date in variables
+                        AddTaskFragment.this.year = year;
+                        month = monthOfYear;
+                        day = dayOfMonth;
+
+                        // Display the selected date
+                        String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        dateTextView.setText(selectedDate);
+                    }
+                }, currentYear, currentMonth, currentDay);
+
+                // Show the DatePickerDialog
+                datePickerDialog.show();
+            }
+        });
+
+        // Set click listener for the clock image view
+        clockImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the current time
+                final Calendar calendar = Calendar.getInstance();
+                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int currentMinute = calendar.get(Calendar.MINUTE);
+
+                // Create a TimePickerDialog to allow the user to select a time
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // Store the selected time in variables
+                        hour = hourOfDay;
+                        AddTaskFragment.this.minute = minute;
+
+                        // Display the selected time
+                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                        timeTextView.setText(selectedTime);
+                    }
+                }, currentHour, currentMinute, true);
+
+                // Show the TimePickerDialog
+                timePickerDialog.show();
+            }
+        });
+
 
         // Set click listener for the save button
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +236,5 @@ public class AddTaskFragment extends Fragment {
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, homeFragment)
                 .commit();
-
     }
 }
