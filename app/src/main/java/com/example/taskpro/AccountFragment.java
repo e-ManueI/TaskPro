@@ -29,7 +29,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         // Start the ChangePasswordActivity
-        Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+        Intent intent = new Intent(getActivity(), ChangePasswordFragment.class);
         startActivity(intent);
     }
 }
