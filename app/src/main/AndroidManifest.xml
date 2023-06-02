@@ -39,7 +39,7 @@
         <activity
             android:name=".DashboardActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Base.Theme.TaskPro" />
         <activity
             android:name=".SignupActivity"
             android:exported="false" />

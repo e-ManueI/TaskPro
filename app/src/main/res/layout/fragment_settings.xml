@@ -169,6 +169,7 @@
                 android:background="@color/purple_500" />
 
             <LinearLayout
+                android:id="@+id/accountButton"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="@drawable/background_settings_tabs"
@@ -212,6 +213,7 @@
                 android:background="@color/purple_500" />
 
             <LinearLayout
+                android:id="@+id/privacyButton"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="@drawable/background_settings_tabs"
@@ -255,6 +257,7 @@
                 android:background="@color/purple_500" />
 
             <LinearLayout
+                android:id="@+id/helpButton"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="@drawable/background_settings_tabs"
@@ -298,6 +301,7 @@
                 android:background="@color/purple_500" />
 
             <LinearLayout
+                android:id="@+id/aboutButton"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="@drawable/background_settings_tabs"
