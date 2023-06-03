@@ -1,15 +1,20 @@
 package com.example.taskpro;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -32,10 +37,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
-
-import kotlin.text.UStringsKt;
 
 public class AddTaskFragment extends Fragment {
     // Declare the necessary views and Firebase variables
@@ -48,11 +54,11 @@ public class AddTaskFragment extends Fragment {
         public Task() {
             // Default constructor required for Firebase
         }
-        public Task(String title, String content) {
+        public Task(String title, String date, String time,String content) {
             this.title = title;
-            this.content = content;
             this.date = date;
             this.time = time;
+            this.content = content;
         }
         public String getTitle() {
             return title;
@@ -153,21 +159,23 @@ public class AddTaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String title = titleEditText.getText().toString().trim();
+                String date = dateTextView.getText().toString().trim();
+                String time = timeTextView.getText().toString().trim();
                 String content = contentEditText.getText().toString().trim();
 
                 // Validate the input
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(date) || TextUtils.isEmpty(time)) {
                     // Show error message if title or content is empty
-                    Toast.makeText(getActivity(), "Please enter both title and content", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please enter both title, date and time", Toast.LENGTH_SHORT).show();
                 } else {
                     // Save the task to Firebase
-                    saveTaskToFirebase(title, content);
+                    saveTaskToFirebase(title, date, time, content);
                 }
             }
         });
     }
 
-    private void saveTaskToFirebase(String title, String content) {
+    private void saveTaskToFirebase(String title, String date, String time, String content) {
         // Get the current user ID (assuming you have implemented Firebase Authentication)
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -188,7 +196,7 @@ public class AddTaskFragment extends Fragment {
         String taskId = userTasksRef.push().getKey();
 
         // Create a Task object
-        Task task = new Task(title, content);
+        Task task = new Task(title, date, time, content);
 
         // Check for internet connection availability
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -220,7 +228,6 @@ public class AddTaskFragment extends Fragment {
             navigateToHomeFragment();
         }
     }
-
 
 
     private void navigateToHomeFragment() {
