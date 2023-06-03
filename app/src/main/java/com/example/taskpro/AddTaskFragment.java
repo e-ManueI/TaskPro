@@ -107,14 +107,27 @@ public class AddTaskFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        // Store the selected date in variables
-                        AddTaskFragment.this.year = year;
-                        month = monthOfYear;
-                        day = dayOfMonth;
+                        // Create a Calendar object with the selected date
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(year, monthOfYear, dayOfMonth);
 
-                        // Display the selected date
-                        String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                        dateTextView.setText(selectedDate);
+                        // Get the current date
+                        Calendar currentDate = Calendar.getInstance();
+
+                        // Compare the selected date with the current date
+                        if (selectedDate.before(currentDate)) {
+                            // Selected date is in the past, show an error message
+                            Toast.makeText(getActivity(), "Please select a date in the future", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Store the selected date in variables
+                            AddTaskFragment.this.year = year;
+                            month = monthOfYear;
+                            day = dayOfMonth;
+
+                            // Display the selected date
+                            String selectedDateStr = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                            dateTextView.setText(selectedDateStr);
+                        }
                     }
                 }, currentYear, currentMonth, currentDay);
 
