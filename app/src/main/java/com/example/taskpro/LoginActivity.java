@@ -24,8 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
-
+    private TextView forgotPasswordTextView;
     private FirebaseAuth mAuth;
+    private PasswordResetHelper passwordResetHelper;
     private boolean isNetworkAvailable = true;
     private NetworkChangeReceiver networkChangeReceiver;
 
@@ -35,9 +36,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        passwordResetHelper = new PasswordResetHelper();
 
         editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
+        forgotPasswordTextView = findViewById(R.id.textView23);
         ImageView imageViewLogin = findViewById(R.id.imageView5);
         TextView registerTextView = findViewById(R.id.textView5);
 
@@ -45,6 +48,19 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 login();
+            }
+        });
+
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = editTextEmail.getText().toString().trim();
+                if (email.isEmpty()) {
+                    editTextEmail.setError("Email is Required");
+                    editTextEmail.requestFocus();
+                } else {
+                    passwordResetHelper.resetPassword(email, LoginActivity.this);
+                }
             }
         });
 

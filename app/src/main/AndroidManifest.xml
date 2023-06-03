@@ -6,11 +6,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.NOTIFICATION_POLICY_ACCESS_GRANTED" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-
 
     <application
         android:allowBackup="true"
@@ -22,19 +21,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskPro"
         tools:targetApi="31">
+        <activity
+            android:name=".ComplainsActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- Google Maps API KEY -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
-
-        <!-- Define the notification channel -->
+            android:value="${MAPS_API_KEY}" /> <!-- Define the notification channel -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
-
-        <!-- Register the BroadcastReceiver -->
+            android:value="@string/default_notification_channel_id" /> <!-- Register the BroadcastReceiver -->
         <receiver
             android:name=".ReminderBroadcastReceiver"
             android:exported="true">
@@ -64,7 +63,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

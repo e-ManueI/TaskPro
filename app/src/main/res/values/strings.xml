@@ -5,8 +5,13 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">Welcome Back!</string>
     <string name="invalid_username">Not a valid username</string>
+    <string name="design">UI design items</string>
+    <string name="forget_password">Forgot your Password?</string>
+    <string name="signup_google">Sign Up with Google</string>
+    <string name="signup_facebook">Sign Up with Facebook</string>
+    <string name="login_new_user">Are you a new user? Register!</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
@@ -42,7 +47,6 @@
     <string name="account_header">Account</string>
     <string name="default_notification_channel_id">channel_id</string>
     <string name="default_notification_channel_name">Notifications</string>
-
 
 
 </resources>

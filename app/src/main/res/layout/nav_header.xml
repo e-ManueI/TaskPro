@@ -12,6 +12,7 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/nav_account"
         app:tint="@color/white"/>
 
@@ -30,8 +31,7 @@
         android:layout_height="wrap_content"
         android:text="manueltylan@gmail.com"
         android:textColor="@color/white"
-        android:textSize="13sp"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="13sp" />
 
 
 
