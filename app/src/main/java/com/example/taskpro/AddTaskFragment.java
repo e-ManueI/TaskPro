@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,10 +38,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class AddTaskFragment extends Fragment {
@@ -227,8 +225,39 @@ public class AddTaskFragment extends Fragment {
             Toast.makeText(getActivity(), "Task saved locally. No internet connection.", Toast.LENGTH_SHORT).show();
             navigateToHomeFragment();
         }
-    }
+        // For the reminder...
+        // Create a Calendar object with the selected date and time
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute);
+        calendar.set(Calendar.SECOND, 0); //ensure that the notification will trigger at the exact minute, without any seconds delay.
 
+        // Get the current time in milliseconds
+        long currentTimeMillis = System.currentTimeMillis();
+
+        // Calculate the time difference between the current time and the selected time
+        long timeDifference = calendar.getTimeInMillis() - currentTimeMillis;
+
+        // Create an Intent to trigger the ReminderBroadcastReceiver
+        Intent reminderIntent = new Intent(getActivity(), ReminderBroadcastReceiver.class);
+        reminderIntent.putExtra("title", title);
+        reminderIntent.putExtra("content", content);
+
+        // Create a PendingIntent to wrap the reminderIntent
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, reminderIntent, PendingIntent.FLAG_IMMUTABLE);
+
+        // Get the AlarmManager
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        // Schedule the alarm
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, currentTimeMillis + timeDifference, pendingIntent);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeMillis + timeDifference, pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, currentTimeMillis + timeDifference, pendingIntent);
+        }
+
+    }
 
     private void navigateToHomeFragment() {
         // Implement the navigation logic to go back to HomeFragment

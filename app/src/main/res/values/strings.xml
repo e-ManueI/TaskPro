@@ -40,6 +40,9 @@
     <string name="settings_help_support">Help &amp; Support</string>
     <string name="settings_about">About</string>
     <string name="account_header">Account</string>
+    <string name="default_notification_channel_id">channel_id</string>
+    <string name="default_notification_channel_name">Notifications</string>
+
 
 
 </resources>

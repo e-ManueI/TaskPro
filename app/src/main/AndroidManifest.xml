@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- If you need access to FINE location, you must request both ACCESS_FINE_LOCATION and ACCESS_COARSE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.NOTIFICATION_POLICY_ACCESS_GRANTED" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
 
     <application
         android:allowBackup="true"
@@ -22,6 +28,20 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
+
+        <!-- Define the notification channel -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <!-- Register the BroadcastReceiver -->
+        <receiver
+            android:name=".ReminderBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.taskpro.ACTION_REMINDER" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".SplashActivity"
