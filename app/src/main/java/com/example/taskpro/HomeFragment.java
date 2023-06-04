@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.recyclerView);
         taskList = new ArrayList<>();
         // Pass the tasksRef to the TaskAdapter
-        taskAdapter = new TaskAdapter(taskList, tasksRef);
+        taskAdapter = new TaskAdapter(taskList, tasksRef, getContext());
 
         // Set the adapter for the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

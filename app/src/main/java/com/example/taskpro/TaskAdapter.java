@@ -1,30 +1,27 @@
 package com.example.taskpro;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.DatabaseReference;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<Task> taskList;
     private DatabaseReference tasksRef;
+    private Context context;
 
-    public TaskAdapter(List<Task> taskList, DatabaseReference tasksRef) {
+    public TaskAdapter(List<Task> taskList, DatabaseReference tasksRef, Context context) {
         this.taskList = taskList;
         this.tasksRef = tasksRef;
+        this.context = context;
     }
 
     @NonNull
@@ -36,11 +33,35 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        // Get the reversed position to access the tasks in descending order
         int reversedPosition = getItemCount() - 1 - position;
-
         Task task = taskList.get(reversedPosition);
-        holder.bind(task, tasksRef);
+        holder.bind(task);
+
+        holder.deleteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteConfirmationDialog(task);
+            }
+        });
+    }
+
+    private void showDeleteConfirmationDialog(final Task task) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Delete Task");
+        builder.setMessage("Are you sure you want to delete this task?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteTask(task);
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void deleteTask(Task task) {
+        tasksRef.child(task.getKey()).removeValue();
     }
 
     @Override
@@ -52,7 +73,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         private TextView monthTextView;
         private TextView dateTextView;
         private TextView yearTextView;
-
         private TextView titleTextView;
         private ImageView deleteImageView;
         private TextView contentTextView;
@@ -69,7 +89,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             timeTextView = itemView.findViewById(R.id.timeTextView);
         }
 
-        public void bind(Task task, DatabaseReference tasksRef) {
+        public void bind(Task task) {
             String month = getMonthString(task.getMonth());
             String day = String.valueOf(task.getDay());
             String year = String.valueOf(task.getYear());
@@ -80,15 +100,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             titleTextView.setText(task.getTitle());
             contentTextView.setText(task.getContent());
             timeTextView.setText(task.getTime());
-
-            // Bind the data to the views
-            deleteImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Delete the task from Firebase
-                    tasksRef.child(task.getKey()).removeValue();
-                }
-            });
         }
 
         private String getMonthString(int month) {
