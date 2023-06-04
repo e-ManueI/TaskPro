@@ -47,7 +47,7 @@
     <string name="account_header">Account</string>
     <string name="default_notification_channel_id">channel_id</string>
     <string name="default_notification_channel_name">Notifications</string>
-
+    <string name="add_task_button">Add Task Floating Action Button (FAB)</string>
 
 
 </resources>
