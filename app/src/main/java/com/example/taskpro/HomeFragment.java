@@ -57,7 +57,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Initialize the RecyclerView and its adapter
         recyclerView = view.findViewById(R.id.recyclerView);
         taskList = new ArrayList<>();
-        taskAdapter = new TaskAdapter(taskList);
+        // Pass the tasksRef to the TaskAdapter
+        taskAdapter = new TaskAdapter(taskList, tasksRef);
 
         // Set the adapter for the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,6 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 taskList.clear();
                 for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
                     Task task = taskSnapshot.getValue(Task.class);
+                    task.setKey(taskSnapshot.getKey()); // Set the key for each task
                     taskList.add(task);
                 }
                 taskAdapter.notifyDataSetChanged();

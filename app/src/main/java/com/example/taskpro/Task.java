@@ -6,12 +6,14 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Task {
+    private String key; // Firebase key associated with the task
     private String date;
     private String title;
     private String content;
     private String time;
 
-    public Task(String date, String title, String content, String time) {
+    public Task(String key, String date, String title, String content, String time) {
+        this.key = key;
         this.date = date;
         this.title = title;
         this.content = content;
@@ -21,6 +23,14 @@ public class Task {
     // Add the no-argument constructor
     public Task() {
         // Required empty constructor for Firebase
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getDate() {
