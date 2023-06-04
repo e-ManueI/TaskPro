@@ -83,12 +83,13 @@
             android:layout_marginRight="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="60dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/sendMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
