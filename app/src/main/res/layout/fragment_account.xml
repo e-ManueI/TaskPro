@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Emmanuel"
+                android:text="Username"
                 android:textColor="@color/white"
                 android:textSize="14sp"/>
 
@@ -54,7 +54,7 @@
                 android:id="@+id/userEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="manueltylan@gmail.com"
+                android:text="user@email.com"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="13sp"
@@ -116,7 +116,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start|bottom"
                             android:paddingHorizontal="8dp"
-                            android:text="manueltylan@gmail.com"
+                            android:text="user@email.com"
                             android:textSize="13sp"
                             android:textColor="@color/muted_black" />
                     </LinearLayout>

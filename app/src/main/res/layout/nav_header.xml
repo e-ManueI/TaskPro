@@ -20,7 +20,7 @@
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Emmanuel"
+        android:text="UserName"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:layout_marginTop="8dp"/>
@@ -29,10 +29,7 @@
         android:id="@+id/userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="manueltylan@gmail.com"
+        android:text="user@email.com"
         android:textColor="@color/white"
         android:textSize="13sp" />
-
-
-
 </LinearLayout>
