@@ -1,7 +1,6 @@
 package com.example.taskpro;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class ComplainsActivity extends AppCompatActivity {
