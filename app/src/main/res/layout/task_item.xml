@@ -112,6 +112,15 @@
                 android:textColor="@color/gray_faded"/>
 
             <TextView
+                android:id="@+id/dateInitTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:text="17/02/2023"
+                android:textSize="12sp"
+                android:textColor="@color/gray_faded" />
+
+            <TextView
                 android:id="@+id/timeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

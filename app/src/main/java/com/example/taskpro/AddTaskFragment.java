@@ -190,24 +190,31 @@ public class AddTaskFragment extends Fragment {
                     // Show error message if title, date, or time is empty
                     Toast.makeText(getActivity(), "Please enter both title, date and time", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Get the current time
-                    final Calendar currentTime = Calendar.getInstance();
-
-                    // Get the selected date and time
-                    Calendar selectedDateTime = Calendar.getInstance();
-                    selectedDateTime.set(year, month, day, hour, minute);
-
-                    // Calculate the time difference between the selected time and current time
-                    long timeDifferenceInMillis = selectedDateTime.getTimeInMillis() - currentTime.getTimeInMillis();
-                    int timeDifferenceInMinutes = (int) (timeDifferenceInMillis / (60 * 1000));
-
-                    // Check if the selected time is at least six minutes later
-                    if (timeDifferenceInMinutes < 6) {
+                    // Check if content exceeds the maximum number of lines
+                    int lineCount = contentEditText.getLineCount();
+                    if (lineCount > 3) {
                         // Show an error message to the user
-                        Toast.makeText(getActivity(), "Please select a time at least six minutes later", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Save the task to Firebase
-                        saveTaskToFirebase(title, date, time, content);
+                        Toast.makeText(getActivity(), "Content should not exceed 3 lines/30 words", Toast.LENGTH_SHORT).show();
+                    }else{
+                        // Get the current time
+                        final Calendar currentTime = Calendar.getInstance();
+
+                        // Get the selected date and time
+                        Calendar selectedDateTime = Calendar.getInstance();
+                        selectedDateTime.set(year, month, day, hour, minute);
+
+                        // Calculate the time difference between the selected time and current time
+                        long timeDifferenceInMillis = selectedDateTime.getTimeInMillis() - currentTime.getTimeInMillis();
+                        int timeDifferenceInMinutes = (int) (timeDifferenceInMillis / (60 * 1000));
+
+                        // Check if the selected time is at least six minutes later
+                        if (timeDifferenceInMinutes < 6) {
+                            // Show an error message to the user
+                            Toast.makeText(getActivity(), "Please select a time at least six minutes later", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Save the task to Firebase
+                            saveTaskToFirebase(title, date, time, content);
+                        }
                     }
                 }
             }

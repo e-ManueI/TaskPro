@@ -87,8 +87,8 @@
                 android:inputType="textMultiLine"
                 android:hint="Content"
                 android:gravity="start"
-                android:minLines="8"
-                android:maxLines="100"
+                android:minLines="2"
+                android:maxLines="3"
                 android:scrollbars="vertical" />
         </com.google.android.material.textfield.TextInputLayout>
     </ScrollView>

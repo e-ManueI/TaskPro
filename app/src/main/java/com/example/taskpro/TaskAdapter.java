@@ -72,6 +72,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         private TextView monthTextView;
         private TextView dateTextView;
+        private TextView dateInitTextView;
         private TextView yearTextView;
         private TextView titleTextView;
         private ImageView deleteImageView;
@@ -82,6 +83,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             super(itemView);
             monthTextView = itemView.findViewById(R.id.monthTextView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
+            dateInitTextView = itemView.findViewById(R.id.dateInitTextView);
             yearTextView = itemView.findViewById(R.id.yearTextView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             deleteImageView = itemView.findViewById(R.id.deleteImageView);
@@ -92,10 +94,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public void bind(Task task) {
             String month = getMonthString(task.getMonth());
             String day = String.valueOf(task.getDay());
+            String date = String.valueOf(task.getDate());
             String year = String.valueOf(task.getYear());
 
             monthTextView.setText(month);
             dateTextView.setText(day);
+            dateInitTextView.setText(date);
             yearTextView.setText(year);
             titleTextView.setText(task.getTitle());
             contentTextView.setText(task.getContent());
