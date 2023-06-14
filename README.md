@@ -1,6 +1,7 @@
 # TaskPro
 To do List Mobile Application. Set tasks, reminders for daily activities
 
+<b>NOTE: Don't forget to fork or star this project 🙏😁 to keep me going for more!</b>
 
 # Illustrations
 <div align="center">
